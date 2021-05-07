@@ -1,0 +1,12 @@
+.todo-filter {
+  width: 100%;
+  max-width: 1170px;
+  margin: 30px auto 0;
+  padding: 0 120px;
+}
+
+.todos {
+  max-width: 1170px;
+  margin: 30px auto 0;
+  padding: 0 120px 50px;
+}
