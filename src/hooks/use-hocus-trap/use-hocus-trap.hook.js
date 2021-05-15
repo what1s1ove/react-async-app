@@ -1,5 +1,5 @@
 import { KeydownKey } from 'common/enums/enums';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'hooks/hooks';
 
 const useFocusTrap = () => {
   const formRef = useRef(null);

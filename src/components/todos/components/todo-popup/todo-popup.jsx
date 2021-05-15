@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useFocusTrap } from 'hooks/hooks';
+import { useState, useFocusTrap } from 'hooks/hooks';
 import { TodoKey, TodoPriority } from 'common/enums/enums';
 import { todoType, createdTodoType } from 'common/prop-types/prop-types';
 import { Modal } from 'components/common/common';

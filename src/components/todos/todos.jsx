@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useCallback, useEffect, useState, useDispatch, useSelector } from 'hooks/hooks';
 import { todos as todosActionCreator } from 'store/actions';
 import { DataPlaceholder } from 'common/enums/enums';
 import { Placeholder } from 'components/common/common';

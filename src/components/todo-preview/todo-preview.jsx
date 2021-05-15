@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+
+import { useEffect, useSelector, useDispatch } from 'hooks/hooks';
 import { todo as todoActionCreator } from 'store/actions';
 import { getLastPath } from 'helpers/helpers';
 import { DataPlaceholder, DataStatus } from 'common/enums/enums';
