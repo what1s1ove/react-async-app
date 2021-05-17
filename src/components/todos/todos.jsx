@@ -37,7 +37,10 @@ const Todos = () => {
   }, [dispatch]);
 
   const handlerTodoStatusChange = useCallback((todo, status) => {
-    dispatch(todosActionCreator.changeStatus(todo.id, status));
+    dispatch(todosActionCreator.changeStatus({
+      id: todo.id,
+      status,
+    }));
   }, [dispatch]);
 
   const handleTodoDelete = useCallback((todo) => {
