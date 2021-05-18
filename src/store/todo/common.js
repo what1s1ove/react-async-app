@@ -1,5 +1,5 @@
 const ActionType = {
-  SET_TODO: 'todo/set-todo',
+  FETCH_TODO: 'todo/fetch-todo',
 };
 
 export { ActionType };

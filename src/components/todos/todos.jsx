@@ -1,15 +1,17 @@
 import { useCallback, useEffect, useState, useDispatch, useSelector } from 'hooks/hooks';
 import { todos as todosActionCreator } from 'store/actions';
-import { DataPlaceholder } from 'common/enums/enums';
-import { Placeholder } from 'components/common/common';
+import { DataPlaceholder, DataStatus } from 'common/enums/enums';
+import { Placeholder, Loader } from 'components/common/common';
 import { TodoFilter, TodoList, TodoPopup } from './components/components'; 
 import { getFilteredTodos } from './helpers/helpers';
 import { DEFAULT_FILTER_VALUES, EMPTY_TODO } from './common/constants';
 import './styles.css';
 
 const Todos = () => {
-  const { todos } = useSelector(({ todos }) => ({
+  const { todos, status, isSaving } = useSelector(({ todos }) => ({
     todos: todos.todos,
+    status: todos.status,
+    isSaving: todos.isSaving,
   }));
   const [currentTodo, setCurrentTodo] = useState(null);
   const [filterValues, setFilterValues] = useState(DEFAULT_FILTER_VALUES);
@@ -30,13 +32,16 @@ const Todos = () => {
   const handleTodoSave = useCallback((todo) => {
     const isUpdate = Boolean(todo.id);
 
-    dispatch(isUpdate ? todosActionCreator.updateTodo(todo) : todosActionCreator.addTodo(todo));
+    dispatch(isUpdate ? todosActionCreator.updateTodoHard(todo) : todosActionCreator.addTodo(todo));
 
     setCurrentTodo(null)
   }, [dispatch]);
 
   const handlerTodoStatusChange = useCallback((todo, status) => {
-    dispatch(todosActionCreator.changeStatus(todo.id, status));
+    dispatch(todosActionCreator.changeStatus({
+      id: todo.id,
+      status,
+    }));
   }, [dispatch]);
 
   const handleTodoDelete = useCallback((todo) => {
@@ -47,14 +52,19 @@ const Todos = () => {
     dispatch(todosActionCreator.fetchTodos());
   }, [dispatch]);
 
+  if (status === DataStatus.PENDING) {
+    return <Loader />;
+  }
+
   return (
     <>
       <section className="todo-filter">
         <h2 className="sr-only">TODOList filter</h2>
         <TodoFilter
+          values={filterValues}
+          isDisabled={isSaving}
           onChange={handlerFilterChange}
           onPopupOpen={handleAddPopupOpen}
-          values={filterValues}
         />
       </section>
       <section className="todos">
@@ -62,6 +72,7 @@ const Todos = () => {
         {hasTasks ? (
           <TodoList
             todos={filteredTodos}
+            isDisabled={isSaving}
             onStatusChange={handlerTodoStatusChange}
             onTodoEdit={handleTodoEdit}
             onTodoDelete={handleTodoDelete}

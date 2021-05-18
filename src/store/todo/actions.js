@@ -1,15 +1,8 @@
-import { todos } from 'database.json';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ActionType } from './common';
 
-const fetchTodo = (id) => {
-  const todo = todos.find((it) => it.id === id);
-
-  return {
-    type: ActionType.SET_TODO,
-    payload: {
-      todo,
-    },
-  };
-};
+const fetchTodo = createAsyncThunk(ActionType.FETCH_TODO, async (id, { extra }) => ({
+  todo: await extra.todosService.getOne (id),
+}));
 
 export { fetchTodo };

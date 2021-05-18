@@ -2,9 +2,10 @@ import PropTypes from 'prop-types';
 import { getValidClasses } from 'helpers/helpers';
 import { todoType } from 'common/prop-types/prop-types';
 import { AppPath, TodoStatus } from 'common/enums/enums';
+import { Link } from 'components/common/common';
 import './style.css';
 
-const Todo = ({ todo, onStatusChange, onTodoEdit, onTodoDelete }) => {
+const Todo = ({ todo, isDisabled, onStatusChange, onTodoEdit, onTodoDelete }) => {
   const isDone = todo.status === TodoStatus.DONE;
 
   const handleStatusChange = () => {
@@ -24,7 +25,7 @@ const Todo = ({ todo, onStatusChange, onTodoEdit, onTodoDelete }) => {
   return (
     <li className={getValidClasses('todo', isDone && 'todo--done')}>
       <h3 className="todo__title">
-        <a href={`${AppPath.TODOS}/${todo.id}`}>{todo.title}</a>
+        <Link to={`${AppPath.TODOS}/${todo.id}`}>{todo.title}</Link>
       </h3>
       <p className="todo__description">{todo.description}</p>
       <footer className="todo__footer">
@@ -35,6 +36,7 @@ const Todo = ({ todo, onStatusChange, onTodoEdit, onTodoDelete }) => {
             <li className="todo__nav-item">
               <button
                 onClick={handleStatusChange}
+                disabled={isDisabled}
                 className="todo__button todo__button--done"
                 type="button"
               >
@@ -44,6 +46,7 @@ const Todo = ({ todo, onStatusChange, onTodoEdit, onTodoDelete }) => {
             <li className="todo__nav-item">
               <button
                 onClick={handleTodoEdit}
+                disabled={isDisabled}
                 className="todo__button todo__button--edit"
                 type="button"
               >
@@ -53,6 +56,7 @@ const Todo = ({ todo, onStatusChange, onTodoEdit, onTodoDelete }) => {
             <li className="todo__nav-item">
               <button
                 onClick={handleTodoDelete}
+                disabled={isDisabled}
                 className="todo__button todo__button--delete"
                 type="button"
               >
@@ -68,6 +72,7 @@ const Todo = ({ todo, onStatusChange, onTodoEdit, onTodoDelete }) => {
 
 Todo.propTypes = {
   todo: todoType.isRequired,
+  isDisabled: PropTypes.bool.isRequired,
   onStatusChange: PropTypes.func.isRequired,
   onTodoEdit: PropTypes.func.isRequired,
   onTodoDelete: PropTypes.func.isRequired,

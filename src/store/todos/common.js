@@ -1,9 +1,9 @@
 const ActionType = {
-  SET_TODOS: 'todos/set-todos',
+  FETCH_TODOS: 'todos/fetch-todos',
   ADD: 'todos/add',
   UPDATE: 'todos/update',
+  HARD_UPDATE: 'todos/hard-update',
   DELETE: 'todos/delete',
-  CHANGE_STATUS: 'todos/chage-status',
 };
 
 export { ActionType };

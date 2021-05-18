@@ -1,13 +1,29 @@
-import { createStore, combineReducers } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { todos, todo } from './root-reducer';
+import { configureStore } from '@reduxjs/toolkit';
+import createSagaMiddleware from 'redux-saga';
+import { todos as todosService } from 'services/services';
+import { todos, todo, toastr } from './root-reducer';
+import { rootSaga } from './root-saga';
 
-const store = createStore(
-  combineReducers({
+const sagaMiddleware = createSagaMiddleware();
+
+const store = configureStore({
+  reducer: {
+    toastr,
     todos,
     todo,
-  }),
-  composeWithDevTools(),
-);
+  },
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware({
+      thunk: {
+        extraArgument: {
+          todosService,
+        },
+      },
+      serializableCheck: false,
+    }).concat(sagaMiddleware);
+  },
+});
+
+sagaMiddleware.run(rootSaga);
 
 export { store };

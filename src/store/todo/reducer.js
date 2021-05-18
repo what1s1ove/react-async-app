@@ -1,29 +1,22 @@
+import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { ActionType } from './common';
+import { fetchTodo } from './actions';
 
 const initialState = {
   todo: null,
   status: DataStatus.IDLE,
 };
 
-const reducer = (state = initialState, action) => {
-  const { type, payload } = action;
+const reducer = createReducer(initialState, (builder) => {
+  builder.addCase(fetchTodo.pending, (state) => {
+    state.status = DataStatus.PENDING;
+  });
+  builder.addCase(fetchTodo.fulfilled, (state, { payload }) => {
+    const { todo } = payload;
 
-  switch (type) {
-    case ActionType.SET_TODO: {
-      const { todo } = payload;
-
-      return {
-        ...state,
-        status: DataStatus.SUCCESS,
-        todo,
-      };
-    }
-
-    default: {
-      return state;
-    }
-  }
-};
+    state.todo = todo;
+    state.status = DataStatus.SUCCESS;
+  });
+});
 
 export { reducer };
