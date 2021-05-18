@@ -1,9 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
+import createSagaMiddleware from 'redux-saga';
 import { todos as todosService } from 'services/services';
-import { todos, todo } from './root-reducer';
+import { todos, todo, toastr } from './root-reducer';
+import { rootSaga } from './root-saga';
+
+const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: {
+    toastr,
     todos,
     todo,
   },
@@ -14,8 +19,11 @@ const store = configureStore({
           todosService,
         },
       },
-    });
+      serializableCheck: false,
+    }).concat(sagaMiddleware);
   },
 });
+
+sagaMiddleware.run(rootSaga);
 
 export { store };
