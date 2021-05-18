@@ -28,9 +28,15 @@
   appearance: none;
 }
 
+.filter__search input:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .filter__search input::placeholder {
   color: var(--color-primary);
 }
+
 .filter__status,
 .filter__priority {
   position: relative;
@@ -68,6 +74,11 @@
   pointer-events: none;
 }
 
+.filter__status select:disabled::after,
+.filter__priority select:disabled::after {
+  opacity: 0.7;
+}
+
 .filter__status select,
 .filter__priority select {
   position: relative;
@@ -89,6 +100,12 @@
   appearance: none;
 }
 
+.filter__status select:disabled,
+.filter__priority select:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .filter__create {
   width: 150px;
 
@@ -104,6 +121,11 @@
   cursor: pointer;
 }
 
-.filter__create:hover {
+.filter__create:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.filter__create:hover:not(:disabled) {
   background-color: #b1b1b1;
 }

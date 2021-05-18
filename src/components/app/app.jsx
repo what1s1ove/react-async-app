@@ -1,6 +1,6 @@
 import { getLastPath } from 'helpers/helpers';
 import { AppPath } from 'common/enums/enums';
-import { Header, Footer } from 'components/common/common';
+import { Header, Footer, Toastr } from 'components/common/common';
 import Todos from 'components/todos/todos';
 import TodoPreview from 'components/todo-preview/todo-preview';
 import NotFound from 'components/not-found/not-found';
@@ -29,6 +29,7 @@ const App = () => {
       <Header />
       <main>{getScreen(pathname)}</main>
       <Footer />
+      <Toastr />
     </>
   );
 };
