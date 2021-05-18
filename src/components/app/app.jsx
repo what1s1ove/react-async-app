@@ -1,37 +1,22 @@
-import { getLastPath } from 'helpers/helpers';
 import { AppPath } from 'common/enums/enums';
-import { Header, Footer, Toastr } from 'components/common/common';
+import { Header, Footer, Toastr, Switch, Route } from 'components/common/common';
 import Todos from 'components/todos/todos';
 import TodoPreview from 'components/todo-preview/todo-preview';
 import NotFound from 'components/not-found/not-found';
 
-const App = () => {
-  const { pathname } = window.location;
-
-  const getScreen = (path) => {
-    const id = getLastPath(path);
-
-    switch (path) {
-      case AppPath.ROOT: {
-        return <Todos />;
-      }
-      case `${AppPath.TODOS}/${id}`: {
-        return <TodoPreview />;
-      }
-      default: {
-        return <NotFound />;
-      }
-    }
-  };
-
-  return (
-    <>
-      <Header />
-      <main>{getScreen(pathname)}</main>
-      <Footer />
-      <Toastr />
-    </>
-  );
-};
+const App = () => (
+  <>
+    <Header />
+    <main>
+      <Switch>
+        <Route path={AppPath.ROOT} exact component={Todos} />
+        <Route path={AppPath.TODOS_$ID} exact component={TodoPreview} />
+        <Route path={AppPath.ANY} exact component={NotFound}  />
+      </Switch>
+    </main>
+    <Toastr />
+    <Footer />
+  </>
+);
 
 export default App;

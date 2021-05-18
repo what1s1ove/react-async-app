@@ -1,7 +1,6 @@
 
-import { useEffect, useSelector, useDispatch } from 'hooks/hooks';
+import { useEffect, useSelector, useDispatch, useRouter } from 'hooks/hooks';
 import { todo as todoActionCreator } from 'store/actions';
-import { getLastPath } from 'helpers/helpers';
 import { DataPlaceholder, DataStatus } from 'common/enums/enums';
 import { Loader, Placeholder } from 'components/common/common';
 import './styles.css';
@@ -12,12 +11,11 @@ const TodoPreview = () => {
     status: todo.status,
   }));
   const dispatch = useDispatch();
+  const { query } = useRouter();
 
   useEffect(() => {
-    const id = getLastPath(window.location.pathname);
-
-    dispatch(todoActionCreator.fetchTodo(id));
-  }, [dispatch]);
+    dispatch(todoActionCreator.fetchTodo(query.id));
+  }, [dispatch, query.id]);
 
   if (status !== DataStatus.SUCCESS) {
     return <Loader />;
